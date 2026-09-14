@@ -1,0 +1,180 @@
+[
+    {
+        "courseCode": "CS 204",
+        "courseName": "Advanced Programming",
+        "courseDescEN": "This course is intended to give advanced programming techniques, as well as further experience in programming. Topics covered will be: advanced object-oriented programming techniques and programming with classes (function overloading, templated classes, inheritance), pointers, linked lists, stacks, queues, debugging and profiling, reusable software (using/creating libraries), visual/GUI programming, exception handling, multi- threaded programming and synchronization. ",
+        "learningOutcomes": [
+            "Reinforce the basics of computer systems and programming: describe how the data is stored in the memory, the internal representation of numeric and non-numeric data, and how they can be manipulated at the bit level; demonstrate the use of preprocessor, compiler and linker in the context of source code processing and explain their roles.",
+            "Understand, implement and use auto, static, extern and dynamically managed data types and structures: describe how various data types and structures (e.g., pointers, user-defined plain-old and other data types and classes) are allocated and used; implement basic data structures, such as arrays, various types of linked lists, stacks and queues, using dynamic memory allocation techniques in C++.",
+            "Understand, implement, and use object-oriented programming: design/develop rich classes with constructor(s), destructor, deep/shallow copy constructor, move constructor, assignment operator and operator overloading sharing objects through reference parameters/pointers; use/develop classes with inheritance, including the concepts of overriding and polymorphism; use/develop templated functions and classes as well as function overloading when necessary.",
+            "Understand, implement, and use advanced concepts: demonstrate the use of exception handling, concurrent applications, and graphical user interfaces."
+        ]
+    },
+    {
+        "courseCode": "CHEM 301",
+        "courseName": "Inorganic Chemistry",
+        "courseDescEN": "Atomic structure and the periodic table (historical development of quantum theory, quantum numbers and atomic wavefunctions, electron configurations, shielding, and periodic trends and exceptions); symmetry and group theory for analysis of molecular properties and spectroscopy; molecular bonding from Lewis structures and VSEPR to molecular orbital theory, including advanced MO models; acid–base chemistry and its role in reaction mechanisms; solid-state chemistry (crystal structures, lattice enthalpy, band theory, solubility, and factors controlling stability and reactivity); coordination chemistry from molecular orbital and Lewis-acid perspectives; and laboratory experiments emphasizing synthetic inorganic techniques. ",
+        "learningOutcomes": [
+            "Explain atomic structure using quantum theory, including the historical development of quantum theory, quantum numbers and atomic wavefunctions, and electron configurations.",
+            "Analyze periodic trends based on electronic structure, including shielding effects and periodic trends and exceptions in ionization energy, electron affinity, and atomic radius.",
+            "Apply symmetry operations and group theory to analyze molecular properties and interactions.",
+            "Analyze molecular bonding from Lewis structures and VSEPR, then derive molecular orbitals with advanced models.",
+            "Apply acid?base concepts to analyze and predict reaction mechanisms.",
+            "Describe solid-state chemistry and apply concepts such as lattice enthalpy, band theory, and solubility to predict stability and reactivity.",
+            "Apply molecular orbital theory and Lewis-acid concepts to interpret coordination chemistry.",
+            "Demonstrate practical skills in synthetic inorganic chemistry, laboratory techniques, and scientific report writing."
+        ]
+    },
+    {
+        "courseCode": "BIO 415",
+        "courseName": "Plant Nutrition",
+        "courseDescEN": "Uptake mechanisms of mineral nutrients, their transport in xylem and phloem, mineral nutrition in yield formation, physiological functions of mineral nutrients, relationship between mineral nutrition and plant diseases, diagnosis of nutrient deficiencies and toxicities, genotypic variation in mineral nutrition and soil and plant factors affecting nutrient availability in rhizosphere. ",
+        "learningOutcomes": [
+            "Upon completion of this coursr, students should be able to: Characterize and identify leaf deficiency and toxicity symptoms of mineral nutrients in crop plants",
+            "Describe essential steps of root absorption, shoot transport, leaf remobilization and seed deposition of mineral nutrients ",
+            "Describe critical functions of mineral nutrients in plant growth and stress tolerance ",
+            "Characterize the relationships between mineral nutrition and tolerance to diseases in crop plants",
+            "Understand how plants modify rhizosphere soil chemically and biologically when exposed to a nutrient deficiency"
+        ]
+    },
+    {
+        "courseCode": "ECON 321",
+        "courseName": "Education Economics and Policy",
+        "courseDescEN": "The role and value of education in the economy; human capital accumulation and economic growth; private and public financing of education; private and social returns to education; schooling quality and educational production; access to education; signaling; non-pecuniary benefits of education; income distribution, equality and social cohesion; performance management and indicators in the education sector, public intervention tools (vouchers, conditional cash transfers, loans). ",
+        "learningOutcomes": [
+            "On completion of the course, students should be able to\r\na)\tunderstand to what extent human capital formation and thus education improves welfare of a society.\r\n",
+            "b)\tdiscover existing and potential problems for individuals to acquire a better education and gain an appreciation of the problems faced by policy makers\r\n",
+            "c) understand the methods of applied and theoretical economics in the context of the provision and demand for education and training.\r\n",
+            "d)\tapply theoretical and quantitative methods to the analysis of current and historical educational policies\r\n"
+        ]
+    },
+    {
+        "courseCode": "MKTG 301",
+        "courseName": "Introduction to Marketing",
+        "courseDescEN": "This course is an introduction to the study of structure and functions of marketing systems in the firm, economy, and society which will include analysis of the environment, target markets, and managerial aspects of marketing. Role of marketing, consumer behaviour, business-to-business markets, marketing research, segmentation and targeting will also be described and discussed. In addition, managerial aspects of marketing such as product and service development, pricing, promotion, advertising, selling, and distribution will be covered. ",
+        "learningOutcomes": [
+            "On completion of this course, students should be able to:\r\nAppreciate the ways in which theories from marketing and the wider social sciences inform our understanding of marketing in practice.\r\nDemonstrate their understanding of the marketing environment, evolution and constraints\r\nApply their knowledge of marketing models and theories to decisions within a managerial context.\r\n\r\nUpon successful completion of the course, the student should be able to:\r\n1. Observe and interpret marketing in action; \r\n2. Critically evaluate their own behaviours as marketing consumers; \r\n3. Become acquainted with research issues and instruments in marketing.\r\n"
+        ]
+    },
+    {
+        "courseCode": "MGMT 413",
+        "courseName": "Strategic Innovation",
+        "courseDescEN": "The purpose of this course is to help students develop an understanding of the dynamics of innovation, and to focus on successful strategies to manage the challenges posed by these dynamics. We will review the unique characteristics of industries characterized by frequent innovation, and explore how strategies in these industries are (or are not) different from other contexts. We will also focus on the process of managing innovation, both internally and externally. This course is suited for students aspiring to become entrepreneurs, general managers or consultants to general managers who are faced with situations in which innovation in new products, services and technologies is important, or those who would like to build basic background on the topic of strategy and innovation. ",
+        "learningOutcomes": [
+            "1. Understand the process and dynamics of innovation\r\n2. Gain familiarity with unique characteristics of innovation-based industries\r\n3. Understand the process of managing innovation"
+        ]
+    },
+    {
+        "courseCode": "BIO 330",
+        "courseName": "Environmental Plant Biology",
+        "courseDescEN": "Interaction of plants with the environment and the human impact is discussed. Topics start with the effects of biotic and abiotic stress factors affecting plant life ranging from ecosystem to global environment scale. Effects of environmental pollutants to plant life, biological clean-up of pollutants, biological degradation of solid wastes and its use in plant production, pest management, food security and sustainable production are other main topics of the course. ",
+        "learningOutcomes": [
+            "Define the scope of environmental plant biology using the sphere concept, and explain how plants interact with the atmosphere, hydrosphere, lithosphere, and biosphere.",
+            "Evaluate how global climate change and associated abiotic and biotic stressors influence plant performance, ecosystem function, and biodiversity.",
+            "Describe ecosystem structure and processes, including energy flow and the cycling of carbon and key nutrients, and relate these processes to the maintenance of plant biodiversity.",
+            "Identify major sources and types of air, water, and soil pollution (including solid and hazardous wastes) and assess their impacts on plants, soils, and ecosystem health.",
+            "Explain practical approaches to environmental management, including biological remediation of contaminated systems, integrated pest management, and strategies for sustainable agriculture and food security."
+        ]
+    },
+    {
+        "courseCode": "MATH 101",
+        "courseName": "Calculus I",
+        "courseDescEN": "Basic functions; their properties and applications to modeling. Rate of change, limit, derivative and linear approximation. Computational techniques. Local and global extrema. Applications to optimization problems. The definite integral. Antiderivatives and the Fundamental Theorem of Calculus. Integration techniques. Improper integrals. Applications. ",
+        "learningOutcomes": [
+            "Understand and use basic properties of elementary functions\r\n",
+            " Understand the idea of limit analytically/graphically, and evaluate limits",
+            "Understand the definition of derivative and its geometric meaning",
+            "Compute derivatives using standard differentiation techniques",
+            "Apply the notion of derivative graphing and optimization problems",
+            "Understand the definition of definite integral and its geometric meaning",
+            "Compute integrals using standard integration techniques",
+            "Understand the idea of integration over unbounded intervals and compute them"
+        ]
+    },
+    {
+        "courseCode": "SPS 374",
+        "courseName": "Global Environmental Challenges",
+        "courseDescEN": "This course aims to provide an introduction to the global environmental challenges with their scientific, economic and political aspects from an interdisciplinary natural and social science perspective. This course equips students with skills to comprehend and analyses the historical background, as well as the future outlook of current environmental problems caused by the immense impact of human civilizations, particularly by economic growth and changing production-consumption patterns. Topics to be discussed include environmental pollution and ecological footprint, global issues such as ozone depletion, deforestation, climate change, and biodiversity loss, air pollution and other environmental health issues, urban environmental problems, food and water politics, plastic pollution and the oceans. Course include discussions of case studies for the solutions and movements for a sustainable future, such as eco-innovation, green economy, and environmentalist campaigns. ",
+        "learningOutcomes": []
+    },
+    {
+        "courseCode": "VA 234",
+        "courseName": "Design with Typography",
+        "courseDescEN": "This course is based on the study of letterforms, typography image and concept relationships for effective communication. The language of typography, building a visual vocabulary, the personality of type, review of fonts and font families, exploring size, arrangement of text, creative use of space, communication through letterforms, working with words and color are the issues and subjects to be investigated. ",
+        "learningOutcomes": [
+            "Upon completion of this course, students should be able to:\r\n1. Demonstrate clear ability of working with typography\r\n2. Translate the abstract and/or concrete entities, ideas and concepts into the accompanying system of human gestures, expressions, silences, levels of speech and the like\r\n3. Form the crux of the spoken language into its visual counterpart, i.e. written content arranged into visual hierarchies and constructs.\r\n"
+        ]
+    },
+    {
+        "courseCode": "PSY 203",
+        "courseName": "Stress and Well-Being",
+        "courseDescEN": "This course examines associations of stress with psychological and physical well-being in adulthood. Topics include conceptualization and measurement of stress and well-being; daily life factors influencing stress reactions; psychological, social, and biological mechanisms underlying stress regulation; pathways through which daily life events and stress are linked to psychological and physical well-being; age-related changes in stress and well-being. ",
+        "learningOutcomes": [
+            "to understand antecedents and consequences of stress and happiness in daily life",
+            "to be able to critically evaluate daily life interactions and experiences in terms of their implications for well-being"
+        ]
+    },
+    {
+        "courseCode": "ECON 301",
+        "courseName": "Econometrics",
+        "courseDescEN": "Simple linear regression, least squares, generalized least squares; goodness of fit; prediction; inference, confidence intervals and hypothesis testing; empirical modeling of economic theory; introduction to econometric packages. ",
+        "learningOutcomes": [
+            "Apply various econometric techniques on data.",
+            "Identify possible data problems, realize consequences of such problems on estimation results and choose appropriate and relevant techniques.",
+            "Interpret estimation results, assess the importance of certain factors on the variable interest.",
+            "Identify causal relationship between variables.",
+            "Develop independent study skills, i.e., to pose a problem, identify main causes, use data to provide quantitative answers.\r\n"
+        ]
+    },
+    {
+        "courseCode": "MGMT 213",
+        "courseName": "Disaster Awareness & Relief Management",
+        "courseDescEN": "This course aims to give a comprehensive understanding of disaster relief management principles and practices. It covers key terms and concepts related to disaster management, explores types of disasters and their impacts, and discusses phases of disaster management, including preparedness, response, recovery, and mitigation strategies. The course also examines the roles of stakeholders, including government agencies, NGOs, international aid organizations, and communities/volunteers, and emphasizes the importance of collaboration and coordination among them. Additionally, it delves into logistics and resource management in disaster response as well as other important topics such as risk assessment and vulnerability analysis, the ethical and legal considerations that arise in disaster situations, effective communication and coordination among stakeholders, post-disaster economic burden, the role of technology, and the psychological impacts of disasters on individuals and society. Throughout the course, students will gain an understanding of disasters and the knowledge needed to respond effectively to them, addressing the multifaceted challenges involved in disaster relief management. ",
+        "learningOutcomes": []
+    },
+    {
+        "courseCode": "MGMT 411",
+        "courseName": "Agile Project Management",
+        "courseDescEN": "It is aimed to provide students with information on project management tools, agile methodology and lean culture, which are of great importance in the sector today and which are required as well as professional knowledge. Students who complete the course will be competent and effective in concepts such as goal-oriented work, creative idea generation, and start-up company culture. With the assignments and applications given in the course, they will have the opportunity to experience the sector needs of today's world with real examples. The course aims to form the basis for companies in the Agile Transformation process and students to become graduates who have sufficient knowledge and can contribute to the company in a short time. ",
+        "learningOutcomes": [
+            "In MGMT 411, students will:\r\n\r\n? Learn about the fundamentals of communication (verbal and nonverbal language, perception, culture etc.) \r\n? Develop oral and written language and communication skills necessary for effective business and professional communication (including effective speaking, listening, and preparing professional presentations and written documents.)\r\n? Raise awareness of intercultural communication issues.\r\n? Practice working efficiently in groups."
+        ]
+    },
+    {
+        "courseCode": "MGMT 301",
+        "courseName": "Introduction to Sustainability",
+        "courseDescEN": "This course offers a sociological and historical perspective on sustainability that encompasses environmental, economic, and social dimensions, ranging from inequality and poverty to responsible consumption. It introduces key issues, questions, and approaches in contemporary sustainability debates, including the Anthropocene, climate change, circular economy, green transitions, green financing, degrowth, carbon markets, ESG and environmental justice. The course also explores prominent sectors central to public sustainability discourse, such as plastics, fast fashion industry, forests, water and oceans, mining, and electric vehicles. By the end of this course, students will gain a comprehensive understanding of sustainability's historical, social, and political dimensions and its relevance to current environmental and economic challenges. They will develop the ability to analyze sustainability issues across sectors, interpret key concepts like the Anthropocene and circular economy, and critically evaluate regulatory and political approaches. Equipped with sociological and historical frameworks, students will propose practical solutions to enhance sustainability practices in diverse contexts. ",
+        "learningOutcomes": []
+    },
+    {
+        "courseCode": "ACC 201",
+        "courseName": "Introduction to Financial Accounting and Reporting",
+        "courseDescEN": "Introduction to Financial Accounting and Reporting Accounting is the information system organizations use to identify, record and communicate relevant economic events and as such all management students should have a strong background in accounting. The purpose of this course is to familiarize the students with basic accounting concepts, principles, and methods as well as to teach them the basic business terminology they will encounter in future management courses and in the business world. The course will help the students appreciate the role of accounting information in financial decision making and is intended to serve as a foundation for subsequent Accounting and Finance courses. The topics covered include demand for accounting information by internal and external users in making investment and credit decisions; supply of accounting information and the institutional background for generally accepted accounting principles; the format and the content of the four basic financial statements; analysis and recording of business transactions through the recording cycle; accounting for current assets including trade receivables and inventories; plant- property- equipment and depreciation; financing through short and long-term debt versus equity; and basic financial ratio analysis. The course is based on International Financial Reporting Standards (IFRS). ",
+        "learningOutcomes": [
+            "Upon successful completion of the course, the student should be able to:\t\r\n1.\tExplain how accounting information is used in resource allocation decisions by users internal and external to the firm,\r\n2.\tDescribe the basic assumptions, concepts and principles of financial accounting,\r\n3.\tAnalyze business transactions in terms of their effect on financial statements and be able to record them formally in company books,\r\n4.\tDistinguish cash flows (cash basis) from income measurement (accrual basis) ,\r\n5.\tPrepare a set of simple financial statements and classify their components for a more meaningful interpretation of the statements,\r\n6.\tBroadly assess the financial position, profitability and cash flows of a firm through simple ratio analysis.\r\n7.\tUnderstand and use basic accounting/financial terminology.\r\n"
+        ]
+    },
+    {
+        "courseCode": "GEN 341",
+        "courseName": "Gender and Society",
+        "courseDescEN": "How have we developed our ideas of what it means to be a woman and what it means to be a man? How do these ideas change historically and from one society to another? Asking these questions and others, this course aims to develop a critical awareness of how gender and sexuality have shaped and have been shaped by political, religious, economic, scientific, and cultural practices and discourses in different parts of the world, including Türkiye. ",
+        "learningOutcomes": [
+            "Discuss the main issues of gender in particular social contexts",
+            "Acquire an understanding of the fundamental issues, concepts and debates in the study of gender",
+            "Explore various myths of gender and critically assess their sources and implications on social life ",
+            "Learn about the social construction of gender and sexuality ",
+            "Explore how gender shaped and is shaped by the society, economy, media, science and politics ",
+            "Learn how to utilize an intersectionality perspective in the analysis of social issues, structures and systems of power ",
+            "Explore how the existing norms and roles are challenged in everyday life and gender-based activisms"
+        ]
+    },
+    {
+        "courseCode": "PSY 201",
+        "courseName": "Mind and Behavior",
+        "courseDescEN": "This course is an introductory level course on human mind and behavior, designed to provide an overview of scientific psychology. The major goal of this course is to introduce theoretical perpectives as well as the empirical findings in psychology. In doing so, the course also aims to highlight both the interaction of psychological sciences with other allied disciplines and the impact of psychological findings in applied fields. In this regard, the course will present an oppurtunity for students with different backgrounds to explore links between their own fields of interest and study and psychology. ",
+        "learningOutcomes": [
+            "To gain an understanding of basic concepts and theories in psychological science, methodologies used to test these theories, and major findings emerging from these tests.",
+            "To gain an introductory understanding of a scientific way of examining and making sense of why people feel, think, and behave the way they do across situations, contexts, and time."
+        ]
+    }
+]
