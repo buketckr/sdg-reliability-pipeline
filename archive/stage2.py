@@ -23,7 +23,7 @@ os.makedirs(
 
 TOKEN_LOG_FILE = f"{OUTPUT_DIR}/token_usage.csv"
 UNRESOLVED_FILE = f"method_a/stage1_results/run{RUN}/unresolved_pairs.json"
-COURSES_FILE = "filtered_courses.json"
+COURSES_FILE = "data/filtered_courses.json"
 OUTPUT_FILE = f"{OUTPUT_DIR}/results.json"
 
 MODEL = "gpt-5.4"

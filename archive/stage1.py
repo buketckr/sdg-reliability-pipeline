@@ -147,29 +147,33 @@ for (course, sdg), group in df.groupby(
     # DECISION RULE
     # --------------------------------------------------
 
-    IMPORTANT_CATEGORIES = {
-        "moderate",
-        "SDG-inclusive",
-        "SDG-focused"
-    }
+    CRITICAL_TRANSITIONS = [
+        {"moderate", "SDG-inclusive"},
+        {"SDG-inclusive", "SDG-focused"},
+        {"moderate", "SDG-focused"}
+    ]
 
-    if dominant_count >= 4:
+    unique_categories = set(categories)
+
+    if len(unique_categories) == 1:
+        # All 5 runs produced the same category.
         status = "accepted"
 
+    elif any(
+        transition.issubset(unique_categories)
+        for transition in CRITICAL_TRANSITIONS
+    ):
+        # Escalate only disagreements involving:
+        # moderate <-> inclusive,
+        # inclusive <-> focused,
+        # moderate <-> focused.
+        status = "needs_additional_evaluation"
+
     else:
-        unique_categories = set(categories)
-
-        # Only escalate disagreements among
-        # moderate / inclusive / focused categories.
-        if (
-            len(unique_categories) > 1
-            and
-            unique_categories.issubset(IMPORTANT_CATEGORIES)
-        ):
-            status = "needs_additional_evaluation"
-
-        else:
-            status = "ignored_noncritical_disagreement"
+        # Ignore lower-priority disagreements such as:
+        # none/speculative <-> indirect
+        # indirect <-> moderate
+        status = "ignored_noncritical_disagreement"
 
 
     result_rows.append({
@@ -310,7 +314,7 @@ summary = pd.DataFrame([
         "total_pairs":
             total_pairs,
 
-        "accepted_4of5_or_5of5":
+        "accepted_5of5":
             accepted_count,
 
         "accepted_percent":
@@ -345,7 +349,7 @@ print(
 )
 
 print(
-    f"Accepted with 4/5 or 5/5 agreement: "
+    f"Accepted with 5/5 category agreement: "
     f"{accepted_count}"
 )
 

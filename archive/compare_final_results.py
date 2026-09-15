@@ -12,9 +12,9 @@ import pandas as pd
 # Add as many final-result JSON files as you want.
 # Two, three, four, etc. are all supported.
 FILES = {
-    "run0": "method_a/stage3_results/run0/final_results.json",
-    "run1": "method_a/stage3_results/run1/final_results.json",
-    # "run3": "method_a/final_results/run3/final_result.json",
+    "run0": "method_a/stage3_results/run3/final_results.json",
+    "run1": "method_a/stage3_results/run4/final_results.json",
+    "run2": "method_a/stage3_results/run6/final_results.json",
     # "run4": "method_a/final_results/run4/final_result.json",
 }
 

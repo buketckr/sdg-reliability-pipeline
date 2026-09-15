@@ -19,7 +19,7 @@ MODEL = "gpt-5.4"
 
 NUM_INTERNAL_RUNS = 5
 
-INPUT_FILE = "filtered_courses.json"
+INPUT_FILE = "data/filtered_courses.json"
 
 OUTPUT_DIR = f"method_a/runs/run{RUN}"
 
@@ -153,6 +153,66 @@ promptTemplate = (
 
     "For SDG4, being a higher-education course is not itself evidence of alignment. "
     "Assign substantial SDG4 relevance only when the course explicitly addresses educational quality, access to education, teaching or learning methods, education policy, educational technologies, or another substantive aspect of SDG4. "
+
+    "Include every SDG from SDG1 through SDG16. "
+
+    "Return only valid JSON in this format: "
+    '{"evaluation":[{"SDGInfo":"SDG1","correlation":0}]}'
+)
+
+
+promptTemplate_strict = (
+    "Evaluate the course description and learning outcomes against SDG1 through SDG16 in numerical order. Do not evaluate SDG17. "
+
+    "For each SDG, return SDGInfo and correlation. "
+    "Use SDGInfo in the format 'SDG<number>'. "
+    "Set correlation to an integer from 0 to 100, where higher values mean stronger correlation and alignment. "
+
+    "Apply this rubric strictly and consistently across repeated evaluations. "
+    "Use the same decision logic for the same type of evidence. "
+    "Do not relax, reinterpret, or shift the category thresholds based on overall impression. "
+    "For the same course evidence, preserve the same category whenever the evidence leads to the same decision-gate outcome. "
+    "When evidence appears to fall near a category boundary, apply the decision gates strictly and base the category only on the stated evidence requirements. "
+    "Do not choose a higher or lower category merely because the case is ambiguous. "
+    "Choose the category whose stated requirements are best supported by the course evidence. "
+    "Do not increase a score merely because the course topic is broadly related to the SDG. "
+    "Higher categories must be supported by stronger evidence, not by thematic similarity alone. "
+
+    "Treat evidence as direct only when the course description or learning outcomes explicitly and substantively address the SDG. "
+    "Treat hypothetical applications, transferable skills, general societal benefits, and downstream effects as indirect evidence. "
+    "Do not infer alignment solely from content related to a neighboring or conceptually similar SDG. "
+    "Evidence must specifically support the SDG being evaluated. "
+
+    "Use these scoring categories consistently: "
+    "0-20 = no meaningful or only speculative relationship (0 <= score <= 20). "
+    "21-40 = indirect relationship (21 <= score <= 40). "
+    "41-60 = moderate relationship; some explicit SDG-related content is present, but not enough to classify the course as SDG-inclusive (41 <= score <= 60). "
+    "61-80 = SDG-inclusive; the SDG is clearly and substantively incorporated into the course, but is not its primary focus (61 <= score <= 80). "
+    "81-100 = SDG-focused; the SDG is a central or primary focus of the course (81 <= score <= 100). "
+
+    "Apply the boundaries exactly: "
+    "40 is indirect, 41 is moderate, 60 is moderate, 61 is SDG-inclusive, 80 is SDG-inclusive, and 81 is SDG-focused. "
+
+    "Apply the scoring categories as sequential decision gates. "
+
+    "Gate 1: Determine whether there is explicit SDG-specific evidence in the course description or learning outcomes. "
+    "If there is no explicit SDG-specific evidence, the score must not exceed 40, even if the course could contribute to the SDG in practice. "
+
+    "Gate 2: If explicit SDG-specific evidence exists, determine whether it is substantive and integrated into the course. "
+    "If the evidence is explicit but limited, peripheral, briefly mentioned, or not clearly integrated into the course, the score must not exceed 60. "
+    "Only explicit and substantive SDG-specific evidence may receive a score above 60. "
+
+    "Gate 3: Determine whether the SDG-related theme characterizes the course as a whole. "
+    "A score above 80 may be assigned only when the SDG is a central or primary focus of the course, rather than one important topic among several. "
+
+    "Do not classify a relationship as indirect (21-40) when the course explicitly and substantively addresses content that is part of the SDG. "
+    "Do not assign strong relevance based only on indirect evidence. "
+
+    "For SDG4, being a higher-education course is not itself evidence of alignment. "
+    "Assign substantial SDG4 relevance only when the course explicitly addresses educational quality, access to education, teaching or learning methods, education policy, educational technologies, or another substantive aspect of SDG4. "
+
+    "Before assigning the final score for each SDG, verify that the chosen score is consistent with the category selected by the decision gates. "
+    "Do not use a score from a higher category when the evidence only satisfies a lower category. "
 
     "Include every SDG from SDG1 through SDG16. "
 
