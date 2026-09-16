@@ -11,7 +11,7 @@ from scipy import stats
 from dotenv import load_dotenv
 from openai import OpenAI
 
-from config import RUN
+from config import RUN, RUN_DIR
 
 
 # --------------------------------------------------
@@ -33,13 +33,13 @@ MIN_COMBINED_CATEGORY_AGREEMENT = 0.75
 #
 # Stage 2 stability is determined by:
 #   1) combined category agreement >= 75%
-#   2) Stage 2 dominant category == combined dominant category
-#
-# The 95% CI is still calculated and reported so that the final
-# result can communicate how numerically boundary-sensitive it is.
+#   2) Stage 2 has at least 2/3 category consensus
+#   3) Stage 2 dominant category == combined dominant category
+#   4) no severe cross-stage category conflict
+#   5) no tie in the combined dominant category
 
-STAGE1_DIR = f"method_a/stage1_results/run{RUN}"
-OUTPUT_DIR = f"method_a/stage2_results/run{RUN}"
+STAGE1_DIR = f"method_a/stage1_results/{RUN_DIR}"
+OUTPUT_DIR = f"method_a/stage2_results/{RUN_DIR}"
 
 os.makedirs(
     OUTPUT_DIR,
@@ -101,27 +101,28 @@ promptTemplate = (
     "Evidence must specifically support the SDG being evaluated. "
 
     "Use these scoring categories consistently: "
-    "0-20 = no meaningful or only speculative relationship (0 <= score <= 20). "
-    "21-40 = indirect relationship (21 <= score <= 40). "
-    "41-60 = moderate relationship; some explicit SDG-related content is present, but not enough to classify the course as SDG-inclusive (41 <= score <= 60). "
-    "61-80 = SDG-inclusive; the SDG is clearly and substantively incorporated into the course, but is not its primary focus (61 <= score <= 80). "
-    "81-100 = SDG-focused; the SDG is a central or primary focus of the course (81 <= score <= 100). "
+    "0-19 = no meaningful or only speculative relationship (0 <= score <= 19). "
+    "20-39 = indirect relationship (20 <= score <= 39). "
+    "40-69 = moderate relationship; some explicit SDG-related content is present, but not enough to classify the course as SDG-inclusive (40 <= score <= 69). "
+    "70-89 = SDG-inclusive; the SDG is clearly and substantively incorporated into the course, but is not its primary focus (70 <= score <= 89). "
+    "90-100 = SDG-focused; the SDG is a central or primary focus of the course (90 <= score <= 100). "
 
     "Apply the boundaries exactly: "
-    "40 is indirect, 41 is moderate, 60 is moderate, 61 is SDG-inclusive, 80 is SDG-inclusive, and 81 is SDG-focused. "
+    "19 is none/speculative, 20 is indirect, 39 is indirect, 40 is moderate, "
+    "69 is moderate, 70 is SDG-inclusive, 89 is SDG-inclusive, and 90 is SDG-focused. "
 
     "Apply the scoring categories as sequential decision gates. "
     "First determine whether there is explicit SDG-specific evidence in the course description or learning outcomes. "
-    "If there is no explicit SDG-specific evidence, the score must not exceed 40, even if the course could contribute to the SDG in practice. "
+    "If there is no explicit SDG-specific evidence, the score must not exceed 39, even if the course could contribute to the SDG in practice. "
 
     "If explicit SDG-specific evidence exists, determine whether it is substantive and integrated into the course. "
-    "If the evidence is explicit but limited, peripheral, or only briefly mentioned, the score must not exceed 60. "
-    "Only explicit and substantive SDG-specific evidence may receive a score above 60. "
+    "If the evidence is explicit but limited, peripheral, or only briefly mentioned, the score must not exceed 69. "
+    "Only explicit and substantive SDG-specific evidence may receive a score of 70 or above. "
 
     "Finally, determine whether the SDG-related theme characterizes the course as a whole. "
-    "A score above 80 may be assigned only when the SDG is a central or primary focus of the course, rather than one important topic among several. "
+    "A score of 90 or above may be assigned only when the SDG is a central or primary focus of the course, rather than one important topic among several. "
 
-    "Do not classify a relationship as indirect (21-40) when the course explicitly and substantively addresses content that is part of the SDG. "
+    "Do not classify a relationship as indirect (20-39) when the course explicitly and substantively addresses content that is part of the SDG. "
     "Do not assign strong relevance based only on indirect evidence. "
 
     "For SDG4, being a higher-education course is not itself evidence of alignment. "
@@ -148,39 +149,29 @@ CATEGORY_ORDER = [
 
 
 def get_category(score):
-
-    if score <= 20:
+    if score <= 19:
         return "none/speculative"
-
-    elif score <= 40:
+    elif score <= 39:
         return "indirect"
-
-    elif score <= 60:
+    elif score <= 69:
         return "moderate"
-
-    elif score <= 80:
+    elif score <= 89:
         return "SDG-inclusive"
-
     else:
         return "SDG-focused"
 
 
 def get_category_bounds(category):
-
     if category == "none/speculative":
-        return 0, 20
-
+        return 0, 19
     elif category == "indirect":
-        return 21, 40
-
+        return 20, 39
     elif category == "moderate":
-        return 41, 60
-
+        return 40, 69
     elif category == "SDG-inclusive":
-        return 61, 80
-
+        return 70, 89
     elif category == "SDG-focused":
-        return 81, 100
+        return 90, 100
 
     raise ValueError(
         f"Unknown category: {category}"
@@ -893,6 +884,24 @@ for course_index, course_item in enumerate(
             )
         )
 
+        combined_counts = Counter(
+            combined_categories
+        )
+
+        combined_max_count = max(
+            combined_counts.values()
+        )
+
+        combined_candidates = [
+            category
+            for category, count in combined_counts.items()
+            if count == combined_max_count
+        ]
+
+        combined_tie = (
+            len(combined_candidates) > 1
+        )
+
 
         # ----------------------------------------------
         # CONFIDENCE INTERVAL
@@ -950,6 +959,14 @@ for course_index, course_item in enumerate(
             == combined_dominant
         )
 
+        stage2_has_consensus = (
+            stage2_dominant_count >= 2
+        )
+
+        no_severe_cross_stage_conflict = (
+            cross_stage_category_distance < 2
+        )
+
         # IMPORTANT:
         # CI is no longer a hard requirement for stability.
         #
@@ -961,7 +978,13 @@ for course_index, course_item in enumerate(
         stable_after_recheck = (
             enough_combined_agreement
             and
+            stage2_has_consensus
+            and
             stage2_supports_final_category
+            and
+            no_severe_cross_stage_conflict
+            and
+            not combined_tie
         )
 
         if stable_after_recheck:
@@ -1134,6 +1157,24 @@ for course_index, course_item in enumerate(
             "cross_stage_category_distance":
                 int(
                     cross_stage_category_distance
+                ),
+
+            "stage2_has_consensus":
+                bool(
+                    stage2_has_consensus
+                ),
+
+            "combined_tie":
+                bool(
+                    combined_tie
+                ),
+
+            "combined_candidates":
+                combined_candidates,
+
+            "no_severe_cross_stage_conflict":
+                bool(
+                    no_severe_cross_stage_conflict
                 ),
 
             "status":

@@ -4,14 +4,14 @@ import os
 import numpy as np
 import pandas as pd
 
-from config import RUN
+from config import RUN, RUN_DIR
 
 
 # --------------------------------------------------
 # FILES
 # --------------------------------------------------
 
-OUTPUT_DIR = f"method_a/stage3_results/run{RUN}"
+OUTPUT_DIR = f"method_a/stage3_results/{RUN_DIR}"
 
 os.makedirs(
     OUTPUT_DIR,
@@ -19,11 +19,11 @@ os.makedirs(
 )
 
 STAGE1_DETAILS = (
-    f"method_a/stage1_results/run{RUN}/details.csv"
+    f"method_a/stage1_results/{RUN_DIR}/details.csv"
 )
 
 STAGE2_RESULTS = (
-    f"method_a/stage2_results/run{RUN}/results.json"
+    f"method_a/stage2_results/{RUN_DIR}/results.json"
 )
 
 OUTPUT_FILE = (
@@ -36,19 +36,14 @@ OUTPUT_FILE = (
 # --------------------------------------------------
 
 def get_category(score):
-
-    if score <= 20:
+    if score <= 19:
         return "none/speculative"
-
-    elif score <= 40:
+    elif score <= 39:
         return "indirect"
-
-    elif score <= 60:
+    elif score <= 69:
         return "moderate"
-
-    elif score <= 80:
+    elif score <= 89:
         return "SDG-inclusive"
-
     else:
         return "SDG-focused"
 

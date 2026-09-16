@@ -1,10 +1,22 @@
-RUN=11
+import os
+
+RUN = int(
+    os.getenv(
+        "RUN",
+        "16"
+    )
+)
+
+RUN_SOURCE = os.getenv(
+    "RUN_SOURCE",
+    "experiment"
+)
 
 
-
-
-
-
+if RUN_SOURCE == "frontend":
+    RUN_DIR = f"frontend_run{RUN}"
+else:
+    RUN_DIR = f"run{RUN}"
 
 
 
@@ -18,5 +30,7 @@ RUN=11
  #run 9 run 2 nin kopyası ama stage_advanced de kullanıldı.
  # run10 run run6 in kopyası ama stage_advanced de kullanıldı
  #run11 normal run, stage advanced le stageler gecirildi.
+ #run 12 ve run13 , ve 14, 15, 16stage advanced ve LAST 9 COURSES LA YAPILDI, şuana kadar ilk kez
+ 
 
- #NORMAL RUNLAR: 2,3,6,11
+ #NORMAL RUNLAR: 2,3,6,11, 12, 13, 14, 15

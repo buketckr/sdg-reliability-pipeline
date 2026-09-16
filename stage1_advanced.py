@@ -6,11 +6,16 @@ import numpy as np
 import pandas as pd
 
 from config import RUN
+from config import RUN_DIR
+
+INPUT_DIR = f"method_a/runs/{RUN_DIR}"
+OUTPUT_DIR = f"method_a/stage1_results/{RUN_DIR}"
 
 NUM_RUNS = 5
-INPUT_DIR = f"method_a/runs/run{RUN}"
+
+INPUT_DIR = f"method_a/runs/{RUN_DIR}"
 FILES = [f"{INPUT_DIR}/run{i}.json" for i in range(1, NUM_RUNS + 1)]
-OUTPUT_DIR = f"method_a/stage1_results/run{RUN}"
+OUTPUT_DIR = f"method_a/stage1_results/{RUN_DIR}"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 OUTPUT_DETAIL = f"{OUTPUT_DIR}/details.csv"
@@ -42,13 +47,13 @@ def normalize_sdg(value):
 
 
 def get_category(score):
-    if score <= 20:
+    if score <= 19:
         return "none/speculative"
-    elif score <= 40:
+    elif score <= 39:
         return "indirect"
-    elif score <= 60:
+    elif score <= 69:
         return "moderate"
-    elif score <= 80:
+    elif score <= 89:
         return "SDG-inclusive"
     return "SDG-focused"
 
@@ -70,9 +75,9 @@ def get_dominant_category(categories):
 
 
 def get_boundary_info(score):
-    if 60 - BOUNDARY_MARGIN <= score <= 61 + BOUNDARY_MARGIN:
+    if 69 - BOUNDARY_MARGIN <= score <= 70 + BOUNDARY_MARGIN:
         return True, "moderate / SDG-inclusive"
-    if 80 - BOUNDARY_MARGIN <= score <= 81 + BOUNDARY_MARGIN:
+    if 89 - BOUNDARY_MARGIN <= score <= 90 + BOUNDARY_MARGIN:
         return True, "SDG-inclusive / SDG-focused"
     return False, ""
 
