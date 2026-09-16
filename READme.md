@@ -205,6 +205,47 @@ Each final SDG entry contains:
 
 ---
 
+## Recommended UI Presentation
+
+The pipeline returns both SDG relevance results and reliability information.  
+A frontend integrating this module should present the final SDG results in a way that keeps the relevance score and the reliability status distinguishable.
+
+For each SDG, the UI should preferably display:
+
+- SDG identifier
+- Final correlation score
+- Final category
+- Reliability status
+- Reliability level
+
+
+### Suggested Reliability Indicators
+
+The UI may use short labels or badges for reliability-related statuses:
+
+- `stable` — consistent category across the initial evaluations
+- `stable_near_boundary` — consistent category, but the representative score is close to an important category boundary
+- `low_relevance_variation` — variation exists only between lower-level adjacent categories
+- `stable_after_recheck` — initially inconsistent result that became stable after Stage 2
+- `unstable` — result remained unreliable after additional evaluation
+
+The reliability status should not be presented as correctness or certainty about the true SDG relationship. It represents the repeatability and stability of the model output.
+
+### Optional Detailed View
+
+For users who need more information, the interface may provide an expandable details section containing:
+
+- Category agreement
+- Stage 1 scores
+- Stage 2 scores, when applicable
+- Whether the result was resolved in Stage 1 or Stage 2
+- 95% confidence interval
+- Boundary sensitivity
+- Reliability level
+
+These details do not necessarily need to be shown in the default view.
+
+---
 ## Testing
 
 A simple end-to-end test script is included to verify that the complete pipeline can run successfully.
