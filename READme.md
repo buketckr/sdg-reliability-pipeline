@@ -203,10 +203,11 @@ Each final SDG entry contains:
 - `source` — Stage that produced the final result
 - `reliability` — Additional reliability metadata
 
+---
 
+## Testing
 
+A simple end-to-end test script is included to verify that the complete pipeline can run successfully.
 
-
-
-
-
+```bash
+python tests/test_pipeline.py
