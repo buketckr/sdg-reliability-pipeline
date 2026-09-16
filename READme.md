@@ -25,6 +25,88 @@ result = run_pipeline(course_data)
 
 ---
 
+## Module Responsibilities
+
+### `pipeline.py`
+
+The main public entry point of the system.
+
+It coordinates the complete evaluation workflow:
+
+- Initial LLM evaluations
+- Stage 1 reliability analysis
+- Conditional Stage 2 re-evaluation
+- Stage 3 final aggregation
+
+---
+
+### `llm_evaluator.py`
+
+Handles all communication with the language model.
+
+Responsibilities include:
+
+- OpenAI API calls
+- SDG evaluation prompt
+- Repeated SDG1-SDG16 evaluations
+- Response validation
+- Retry handling
+
+---
+
+### `stage1.py`
+
+Analyzes the five initial evaluations.
+
+For each SDG, it determines whether the result is:
+
+- `stable`
+- `stable_near_boundary`
+- `low_relevance_variation`
+- `needs_additional_evaluation`
+
+---
+
+### `stage2.py`
+
+Runs only when Stage 1 identifies one or more SDGs that require additional evaluation.
+
+It:
+
+- Performs three additional full SDG1-SDG16 evaluations
+- Combines Stage 1 and Stage 2 results
+- Reassesses category stability
+- Produces reliability and uncertainty information
+
+---
+
+### `stage3.py`
+
+Produces the final SDG1-SDG16 output.
+
+It:
+
+- Combines results resolved in Stage 1 with results resolved in Stage 2
+- Selects the final score and category for each SDG
+- Validates score/category consistency
+- Produces the final result returned by the pipeline
+
+---
+
+### `config.py`
+
+Stores shared configuration values used throughout the pipeline, including:
+
+- Model name
+- Temperature
+- Number of initial runs
+- Number of Stage 2 runs
+- Category boundaries
+- Near-boundary margin
+- Reliability thresholds
+- API retry settings
+
+---
 ## Requirements
 
 Python 3 is required.
@@ -36,6 +118,7 @@ pip install -r requirements.txt
 ```
 
 ---
+
 
 ## Environment Configuration
 
