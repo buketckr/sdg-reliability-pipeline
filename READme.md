@@ -210,4 +210,4 @@ Each final SDG entry contains:
 A simple end-to-end test script is included to verify that the complete pipeline can run successfully.
 
 ```bash
-python tests/test_pipeline.py
+python -m tests.test_pipeline
