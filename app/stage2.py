@@ -4,15 +4,8 @@ from collections import Counter
 
 from scipy import stats
 
-from app.llm_evaluator import evaluate_course
-from app.stage1 import CATEGORY_ORDER, get_category
-
-
-# ============================================================
-# SETTINGS
-# ============================================================
-
 from app.config import (
+    INITIAL_RUNS,
     STAGE2_RUNS,
     MIN_COMBINED_CATEGORY_AGREEMENT,
     CATEGORY_ORDER,
@@ -23,10 +16,6 @@ from app.llm_evaluator import evaluate_course
 from app.stage1 import get_category
 
 
-# ============================================================
-# CATEGORY HELPERS
-# ============================================================
-
 def get_category_bounds(category):
     try:
         return CATEGORY_BOUNDS[category]
@@ -36,13 +25,9 @@ def get_category_bounds(category):
         )
 
 def category_distance(category_a, category_b):
-    """
-    Calculate ordinal distance between two categories.
+  
+    #Calculate ordinal distance between two categories.
 
-    Examples:
-        moderate -> SDG-inclusive = 1
-        indirect -> SDG-inclusive = 2
-    """
 
     return abs(
         CATEGORY_ORDER.index(category_a)
@@ -100,15 +85,9 @@ def representative_score_for_category(
     scores,
     category,
 ):
-    """
-    Calculate the representative final score using only scores
-    belonging to the selected final category.
+    
+    #Calculate the representative final score using only scores belonging to the selected final category.
 
-    This prevents inconsistent combinations such as:
-
-        score = 46
-        category = indirect
-    """
 
     matching_scores = [
         int(score)
@@ -126,20 +105,11 @@ def representative_score_for_category(
     )
 
 
-# ============================================================
-# CONFIDENCE INTERVAL
-# ============================================================
+
 
 def calculate_confidence_interval(scores):
-    """
-    Calculate a 95% Student-t confidence interval for the mean
-    score across repeated full-context evaluations.
 
-    Important:
-    This interval describes variation in repeated model scores.
-    It does NOT represent the probability that the true SDG
-    relevance lies inside the interval.
-    """
+    #calc confidence interval across all runs
 
     n = len(scores)
 
@@ -204,14 +174,10 @@ def calculate_confidence_interval(scores):
     }
 
 
-# ============================================================
-# EVALUATION HELPERS
-# ============================================================
 
 def evaluation_to_lookup(evaluation):
     """
     Convert an SDG evaluation list to:
-
         {
             "SDG1": 10,
             "SDG2": 20,
@@ -244,14 +210,9 @@ def evaluation_to_lookup(evaluation):
     return lookup
 
 
-# ============================================================
-# INPUT VALIDATION
-# ============================================================
 
 def validate_stage1_result(stage1_result):
-    """
-    Validate the object returned by run_stage1().
-    """
+  
 
     if not isinstance(stage1_result, dict):
         raise ValueError(
@@ -286,26 +247,14 @@ def validate_stage1_result(stage1_result):
     )
 
 
-# ============================================================
-# STAGE 2
-# ============================================================
+
 
 def run_stage2(
     course_data,
     stage1_result,
 ):
-    """
-    Perform Stage 2 targeted re-evaluation.
-
-    Only course-SDG pairs marked as
-    'needs_additional_evaluation' by Stage 1 are analyzed here.
-
-    However, the LLM itself still performs three complete
-    SDG1-SDG16 evaluations of the course so that Stage 2 uses
-    the same full-context evaluation format as Stage 1.
-
-    No files are read or written.
-    """
+ 
+    #Perform Stage 2 targeted re-evaluation.
 
     (
         course_code,
@@ -314,9 +263,6 @@ def run_stage2(
         stage1_result
     )
 
-    # --------------------------------------------------------
-    # NOTHING TO RE-EVALUATE
-    # --------------------------------------------------------
 
     if not unresolved_pairs:
 
@@ -332,13 +278,10 @@ def run_stage2(
             },
         }
 
-    # --------------------------------------------------------
-    # CHECK COURSE CONSISTENCY
-    # --------------------------------------------------------
 
-    input_course_code = course_data.get(
-        "courseCode"
-    )
+    input_course_code = str(
+        course_data.get("courseCode", "")).strip()
+    
 
     if input_course_code != course_code:
         raise ValueError(
@@ -347,9 +290,7 @@ def run_stage2(
             f"({course_code})."
         )
 
-    # --------------------------------------------------------
-    # 3 NEW FULL SDG1-SDG16 EVALUATIONS
-    # --------------------------------------------------------
+
 
     stage2_evaluations = evaluate_course(
         course_data=course_data,
@@ -373,9 +314,6 @@ def run_stage2(
         for run in raw_runs
     ]
 
-    # --------------------------------------------------------
-    # ANALYZE ONLY UNRESOLVED SDGs
-    # --------------------------------------------------------
 
     results = []
 
@@ -392,10 +330,10 @@ def run_stage2(
             ]
         ]
 
-        if len(stage1_scores) != 5:
+        if len(stage1_scores) != INITIAL_RUNS:
             raise ValueError(
                 f"{course_code} - {sdg} must contain "
-                f"exactly 5 Stage 1 scores."
+                f"exactly {INITIAL_RUNS} Stage 1 scores."
             )
 
         stage1_categories = [
@@ -403,9 +341,6 @@ def run_stage2(
             for score in stage1_scores
         ]
 
-        # ----------------------------------------------------
-        # STAGE 2 SCORES
-        # ----------------------------------------------------
 
         stage2_scores = []
 
@@ -427,9 +362,6 @@ def run_stage2(
             for score in stage2_scores
         ]
 
-        # ----------------------------------------------------
-        # COMBINE 5 + 3 = 8 OBSERVATIONS
-        # ----------------------------------------------------
 
         combined_scores = (
             stage1_scores
@@ -441,9 +373,6 @@ def run_stage2(
             + stage2_categories
         )
 
-        # ----------------------------------------------------
-        # CATEGORY SUMMARIES
-        # ----------------------------------------------------
 
         (
             stage1_dominant,
@@ -469,9 +398,6 @@ def run_stage2(
             combined_categories
         )
 
-        # ----------------------------------------------------
-        # COMBINED TIE
-        # ----------------------------------------------------
 
         combined_counts = Counter(
             combined_categories
@@ -492,9 +418,6 @@ def run_stage2(
             len(combined_candidates) > 1
         )
 
-        # ----------------------------------------------------
-        # CROSS-STAGE CONSISTENCY
-        # ----------------------------------------------------
 
         cross_stage_category_distance = (
             category_distance(
@@ -521,9 +444,6 @@ def run_stage2(
             >= MIN_COMBINED_CATEGORY_AGREEMENT
         )
 
-        # ----------------------------------------------------
-        # FINAL CATEGORY
-        # ----------------------------------------------------
 
         final_category = (
             combined_dominant
@@ -542,9 +462,6 @@ def run_stage2(
                 f"score for {course_code} - {sdg}."
             )
 
-        # ----------------------------------------------------
-        # STABILITY DECISION
-        # ----------------------------------------------------
 
         stable_after_recheck = (
             enough_combined_agreement
@@ -559,9 +476,6 @@ def run_stage2(
         else:
             status = "unstable"
 
-        # ----------------------------------------------------
-        # CONFIDENCE INTERVAL
-        # ----------------------------------------------------
 
         ci = calculate_confidence_interval(
             combined_scores
@@ -584,9 +498,6 @@ def run_stage2(
             not ci_inside_final_category
         )
 
-        # ----------------------------------------------------
-        # RELIABILITY LEVEL
-        # ----------------------------------------------------
 
         if status == "unstable":
 
@@ -600,9 +511,6 @@ def run_stage2(
 
             reliability_level = "medium"
 
-        # ----------------------------------------------------
-        # RESULT
-        # ----------------------------------------------------
 
         result = {
             "course":
@@ -734,9 +642,6 @@ def run_stage2(
             result
         )
 
-    # ========================================================
-    # SUMMARY
-    # ========================================================
 
     stable_after_recheck_count = sum(
         1

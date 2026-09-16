@@ -3,14 +3,11 @@ from collections import Counter
 from app.stage1 import get_category
 
 
-# ============================================================
-# HELPERS
-# ============================================================
 
 def sdg_number(value):
-    """
-    Convert an SDG label such as 'SDG8' to integer 8.
-    """
+    
+    #Convert an SDG label such as 'SDG8' to integer 8.
+    
 
     return int(
         str(value)
@@ -20,16 +17,7 @@ def sdg_number(value):
 
 
 def build_stage2_lookup(stage2_result):
-    """
-    Convert Stage 2 results into a lookup:
 
-        {
-            "SDG8": {...},
-            "SDG9": {...}
-        }
-
-    Returns an empty dictionary if Stage 2 was not performed.
-    """
 
     if not stage2_result:
         return {}
@@ -51,23 +39,13 @@ def build_stage2_lookup(stage2_result):
     }
 
 
-# ============================================================
-# STAGE 1 RELIABILITY METADATA
-# ============================================================
+
 
 def build_stage1_reliability(stage1_item):
-    """
-    Build reliability metadata for a result resolved in Stage 1.
+  
+    #Build reliability metadata for a result resolved in Stage 1.
 
-    Stage 1 does not assign formal high / medium / low
-    reliability levels.
-
-    Instead, its reliability information is based on:
-        - category agreement
-        - category counts
-        - boundary information
-        - score variation
-    """
+ 
 
     return {
         "status":
@@ -118,14 +96,11 @@ def build_stage1_reliability(stage1_item):
     }
 
 
-# ============================================================
-# STAGE 2 RELIABILITY METADATA
-# ============================================================
 
 def build_stage2_reliability(stage2_item):
-    """
-    Build reliability metadata for a pair that reached Stage 2.
-    """
+    
+   # Build reliability metadata for a pair that reached Stage 2.
+    
 
     return {
         "status":
@@ -238,14 +213,9 @@ def build_stage2_reliability(stage2_item):
     }
 
 
-# ============================================================
-# INPUT VALIDATION
-# ============================================================
 
 def validate_stage1_result(stage1_result):
-    """
-    Validate the result returned by run_stage1().
-    """
+
 
     if not isinstance(stage1_result, dict):
         raise ValueError(
@@ -283,9 +253,7 @@ def validate_stage1_result(stage1_result):
     )
 
 
-# ============================================================
-# FINAL CONSISTENCY CHECK
-# ============================================================
+
 
 def validate_final_score_category(
     course_code,
@@ -293,10 +261,9 @@ def validate_final_score_category(
     score,
     category,
 ):
-    """
-    Ensure that the final numeric score belongs to the
-    reported final category.
-    """
+ 
+    #Ensure that the final numeric score belongs to the reported final category.
+
 
     calculated_category = get_category(
         score
@@ -314,9 +281,7 @@ def validate_final_score_category(
         )
 
 
-# ============================================================
-# STAGE 3
-# ============================================================
+
 
 def run_stage3(
     stage1_result,
@@ -333,11 +298,6 @@ def run_stage3(
     - If Stage 1 marked the pair as
       needs_additional_evaluation:
         use the corresponding Stage 2 final result.
-
-    The final score/category consistency is validated before
-    returning the result.
-
-    No files are read or written.
     """
 
     (
@@ -347,9 +307,6 @@ def run_stage3(
         stage1_result
     )
 
-    # --------------------------------------------------------
-    # STAGE 2 LOOKUP
-    # --------------------------------------------------------
 
     stage2_lookup = build_stage2_lookup(
         stage2_result
@@ -357,9 +314,6 @@ def run_stage3(
 
     final_evaluations = []
 
-    # --------------------------------------------------------
-    # BUILD FINAL RESULT FOR SDG1-SDG16
-    # --------------------------------------------------------
 
     for stage1_item in stage1_results:
 
@@ -371,10 +325,6 @@ def run_stage3(
             "status"
         ]
 
-        # ====================================================
-        # CASE 1:
-        # PAIR REQUIRED STAGE 2
-        # ====================================================
 
         if (
             stage1_status
@@ -419,10 +369,7 @@ def run_stage3(
                 )
             )
 
-        # ====================================================
-        # CASE 2:
-        # PAIR WAS RESOLVED IN STAGE 1
-        # ====================================================
+
 
         else:
 
@@ -450,9 +397,7 @@ def run_stage3(
                 )
             )
 
-        # ====================================================
-        # CONSISTENCY CHECK
-        # ====================================================
+
 
         validate_final_score_category(
             course_code=course_code,
@@ -461,9 +406,7 @@ def run_stage3(
             category=final_category,
         )
 
-        # ====================================================
-        # FINAL SDG OBJECT
-        # ====================================================
+
 
         final_evaluations.append(
             {
@@ -487,9 +430,7 @@ def run_stage3(
             }
         )
 
-    # --------------------------------------------------------
-    # SORT SDG1 -> SDG16
-    # --------------------------------------------------------
+
 
     final_evaluations.sort(
         key=lambda item:
@@ -498,9 +439,7 @@ def run_stage3(
         )
     )
 
-    # --------------------------------------------------------
-    # FINAL VALIDATION
-    # --------------------------------------------------------
+
 
     if len(final_evaluations) != 16:
 
@@ -510,9 +449,7 @@ def run_stage3(
             f"{len(final_evaluations)}."
         )
 
-    # --------------------------------------------------------
-    # SUMMARY
-    # --------------------------------------------------------
+
 
     status_counts = Counter(
         item["status"]
@@ -547,10 +484,7 @@ def run_stage3(
             ),
     }
 
-    # --------------------------------------------------------
-    # FINAL COURSE OBJECT
-    # --------------------------------------------------------
-
+    
     return {
         "course":
             course_code,
