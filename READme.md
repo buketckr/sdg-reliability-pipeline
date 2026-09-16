@@ -53,6 +53,7 @@ The input must be a Python dictionary.
 
 ## Required Fields
 
+```python
 course_data = {
     "courseCode": "MGMT411",
     "courseDescEN": "Course description...",
@@ -62,6 +63,7 @@ course_data = {
         "Learning outcome 3"
     ]
 }
+```
 
 learningOutcomes is not required.
 
@@ -72,7 +74,7 @@ learningOutcomes is not required.
  ```run_pipeline() ``` returns a standard Python dictionary.
 
  Example:
-
+```python
 {
     "course": "MGMT411",
     "evaluation": [
@@ -106,16 +108,19 @@ learningOutcomes is not required.
     }
 }
 
+```
 
-Each final SDG entry contains;
-SDGInfo (SDG identifier)
-correlation (Final numeric score)
-category (Final score category)
-status (Reliability status)
-source (Stage that produced the final result)
-reliability (Additional reliability metadata)
 
-,
+Each final SDG entry contains:
+
+- `SDGInfo` — SDG identifier
+- `correlation` — Final numeric score
+- `category` — Final score category
+- `status` — Reliability status
+- `source` — Stage that produced the final result
+- `reliability` — Additional reliability metadata
+
+
 
 
 
