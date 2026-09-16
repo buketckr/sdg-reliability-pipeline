@@ -1,4 +1,6 @@
-method_a
+
 .venv
 .env
-__pycache__/config.cpython-314.pyc
+__pycache__/
+
+
