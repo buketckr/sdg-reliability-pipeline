@@ -1,55 +1,23 @@
-#1 Backend terminali
+# SDG Reliability Evaluation Pipeline
 
-Projenin root klasöründe ol:
-cd C:\Users\Buket\OneDrive\Desktop\sdg-project-advanced
+This project provides a Python-based reliability evaluation pipeline for assessing the relationship between university courses and the United Nations Sustainable Development Goals (SDGs).
 
-Virtual environment’i aktive et:
+The system evaluates SDG1 through SDG16 based on a course description and its learning outcomes. SDG17 is not included.
 
-.\.venv\Scripts\Activate.ps1
+The project is designed as a framework-independent Python module so that it can be integrated into an existing backend or frontend infrastructure.
 
-Sonra backend’i başlat:
+---
 
-uvicorn backend.app:app --reload
+## Overview
 
-Doğru açılırsa şuna benzer bir şey görürsün:
+Large Language Model (LLM) evaluations may produce slightly different scores when the same course is evaluated multiple times.
 
-Uvicorn running on http://127.0.0.1:8000
+To improve the repeatability of the final SDG classification, this project uses a multi-stage reliability evaluation process.
 
-İstersen kontrol için browser’da aç:
+The complete pipeline is executed through a single function:
 
-http://localhost:8000/docs
+```python
+from app.pipeline import run_pipeline
 
-Burada GET /api/courses ve POST /api/evaluate görünmeli.
-
-2) Frontend terminali
-
-Yeni bir PowerShell aç:
-
-cd C:\Users\Buket\OneDrive\Desktop\sdg-project-advanced\frontend
-
-Sonra:
-
-npm run dev
-
-Vite sana genelde şunu verir:
-
-http://localhost:5173
-
-Onu browser’da aç.
-
-Akış:
-
-Terminal 1:
-uvicorn backend.app:app --reload
-
-Terminal 2:
-cd frontend
-npm run dev
-
-Sonra frontend’de course seçip Evaluate Course butonuna basıyorsun.
-
-Durdurmak istersen ilgili terminalde:
-
-Ctrl + C
-
+result = run_pipeline(course_data)
 basman yeterli.
