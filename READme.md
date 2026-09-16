@@ -20,4 +20,4 @@ The complete pipeline is executed through a single function:
 from app.pipeline import run_pipeline
 
 result = run_pipeline(course_data)
-basman yeterli.
+
