@@ -4,12 +4,6 @@ import time
 
 from dotenv import load_dotenv
 from openai import OpenAI
-
-
-# ============================================================
-# SETTINGS
-# ============================================================
-
 from app.config import (
     MODEL,
     TEMPERATURE,
@@ -19,20 +13,10 @@ from app.config import (
 )
 
 
-# ============================================================
-# ENVIRONMENT / OPENAI
-# ============================================================
-
 load_dotenv()
 
 
 def get_openai_client():
-    """
-    Create and return an OpenAI client.
-
-    Supports both OPENAI_API_KEY and the older API_KEY variable
-    currently used by the project.
-    """
 
     api_key = (
         os.getenv("OPENAI_API_KEY")
@@ -48,9 +32,6 @@ def get_openai_client():
     return OpenAI(api_key=api_key)
 
 
-# ============================================================
-# PROMPT
-# ============================================================
 
 PROMPT_TEMPLATE = (
     "Evaluate the course description and learning outcomes against "
@@ -125,14 +106,8 @@ PROMPT_TEMPLATE = (
 )
 
 
-# ============================================================
-# RESPONSE HELPERS
-# ============================================================
-
 def clean_json(response_text):
-    """
-    Extract the outermost JSON object from a model response.
-    """
+
 
     if not response_text:
         raise ValueError("Model returned an empty response.")
@@ -149,14 +124,7 @@ def clean_json(response_text):
 
 
 def validate_evaluation(evaluation):
-    """
-    Validate the model's SDG evaluation.
-
-    Expected:
-    - exactly 16 entries
-    - SDG1 through SDG16 in order
-    - integer correlation values from 0 to 100
-    """
+ 
 
     if not isinstance(evaluation, list):
         raise ValueError(
@@ -208,20 +176,7 @@ def validate_evaluation(evaluation):
     return validated
 
 
-# ============================================================
-# COURSE HELPERS
-# ============================================================
-
 def validate_course_data(course_data):
-    """
-    Validate and normalize incoming course data.
-
-    Supported description fields:
-    - courseDescEN   (current project format)
-    - description   (generic integration format)
-
-    learningOutcomes must be a list of strings.
-    """
 
     if not isinstance(course_data, dict):
         raise ValueError("course_data must be a dictionary.")
@@ -269,30 +224,15 @@ def validate_course_data(course_data):
     }
 
 
-# ============================================================
-# SINGLE LLM EVALUATION
-# ============================================================
 
 def evaluate_once(
     course_data,
     client=None,
     max_retries=MAX_RETRIES,
 ):
-    """
-    Perform one complete SDG1-SDG16 evaluation for one course.
-
-    Returns:
-        {
-            "course": "...",
-            "evaluation": [...],
-            "metadata": {
-                "response_time_seconds": ...,
-                "input_tokens": ...,
-                "output_tokens": ...,
-                "total_tokens": ...
-            }
-        }
-    """
+    
+    #Perform one complete SDG1-SDG16 evaluation for one course.
+    
 
     course = validate_course_data(course_data)
 
@@ -393,32 +333,15 @@ def evaluate_once(
     ) from last_error
 
 
-# ============================================================
-# MULTIPLE INITIAL EVALUATIONS
-# ============================================================
+
 
 def evaluate_course(
     course_data,
     num_runs=INITIAL_RUNS,
 ):
-    """
-    Perform multiple independent evaluations of one course.
+  
+    #Perform multiple independent evaluations of one course.
 
-    This function replaces the old script-level five-run loop.
-
-    Returns:
-        {
-            "course": "MGMT411",
-            "runs": [
-                {
-                    "run": 1,
-                    "evaluation": [...],
-                    "metadata": {...}
-                },
-                ...
-            ]
-        }
-    """
 
     if not isinstance(num_runs, int) or num_runs < 1:
         raise ValueError(

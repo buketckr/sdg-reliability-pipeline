@@ -8,9 +8,6 @@ from app.stage1 import run_stage1
 from app.stage2 import run_stage2
 from app.stage3 import run_stage3
 
-# ============================================================
-# PIPELINE
-# ============================================================
 
 def run_pipeline(course_data):
     """
@@ -53,26 +50,18 @@ def run_pipeline(course_data):
             "course_data must be a dictionary."
         )
 
-    # --------------------------------------------------------
-    # INITIAL LLM EVALUATIONS
-    # --------------------------------------------------------
+
 
     initial_results = evaluate_course(
         course_data=course_data,
         num_runs=INITIAL_RUNS,
     )
 
-    # --------------------------------------------------------
-    # STAGE 1
-    # --------------------------------------------------------
 
     stage1_result = run_stage1(
         initial_results
     )
 
-    # --------------------------------------------------------
-    # STAGE 2
-    # --------------------------------------------------------
 
     stage2_result = None
 
@@ -83,18 +72,13 @@ def run_pipeline(course_data):
             stage1_result=stage1_result,
         )
 
-    # --------------------------------------------------------
-    # STAGE 3
-    # --------------------------------------------------------
+
 
     final_result = run_stage3(
         stage1_result=stage1_result,
         stage2_result=stage2_result,
     )
 
-    # --------------------------------------------------------
-    # OPTIONAL PIPELINE METADATA
-    # --------------------------------------------------------
 
     final_result["pipeline"] = {
         "initial_runs": INITIAL_RUNS,

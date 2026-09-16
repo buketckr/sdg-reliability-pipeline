@@ -1,12 +1,6 @@
 import re
 from collections import Counter
 from statistics import mean, median, stdev
-
-
-# ============================================================
-# SETTINGS
-# ============================================================
-
 from app.config import (
     INITIAL_RUNS,
     BOUNDARY_MARGIN,
@@ -14,14 +8,11 @@ from app.config import (
 )
 
 
-# ============================================================
-# CATEGORY HELPERS
-# ============================================================
 
 def normalize_sdg(value):
-    """
-    Normalize SDG labels such as 'SDG 8' or 'sdg8' to 'SDG8'.
-    """
+   
+    #Normalize SDG labels such as 'SDG 8' or 'sdg8' to 'SDG8'.
+    
 
     match = re.search(
         r"SDG\s*(\d+)",
@@ -36,9 +27,9 @@ def normalize_sdg(value):
 
 
 def get_category(score):
-    """
-    Convert a numeric SDG correlation score to its category.
-    """
+   
+    #Convert a numeric SDG correlation score to its category.
+   
 
     if score <= 19:
         return "none/speculative"
@@ -56,9 +47,9 @@ def get_category(score):
 
 
 def get_category_counts(categories):
-    """
-    Count category occurrences while preserving category order.
-    """
+    
+   # Count category occurrences while preserving category order.
+    
 
     counts = Counter(categories)
 
@@ -70,13 +61,10 @@ def get_category_counts(categories):
 
 
 def get_dominant_category(categories):
-    """
-    Return the most frequent category and its count.
-
-    If a tie occurs, the lower category is selected deterministically.
-    With five Stage 1 runs, a complete top-frequency tie is uncommon,
-    but the rule is retained for robustness.
-    """
+ 
+    # Return the most frequent category and its count.
+    #If a tie occurs, the lower category is selected deterministically.
+ 
 
     counts = get_category_counts(categories)
 
@@ -96,23 +84,11 @@ def get_dominant_category(categories):
     return dominant_category, max_count
 
 
-# ============================================================
-# BOUNDARY HELPERS
-# ============================================================
+
 
 def get_boundary_info(score):
-    """
-    Detect whether the representative score is close to one
-    of the two important higher-level category boundaries.
-
-    Important boundaries:
-        69 / 70 -> moderate / SDG-inclusive
-        89 / 90 -> SDG-inclusive / SDG-focused
-
-    With margin = 3:
-        66-73
-        86-93
-    """
+    
+    #Detect whether the representative score is close to one of the two important higher-level category boundaries.
 
     if (
         69 - BOUNDARY_MARGIN
@@ -138,17 +114,8 @@ def get_boundary_info(score):
 
 
 def is_noncritical_low_variation(unique_categories):
-    """
-    Determine whether observed category variation is considered
-    low-level and does not require Stage 2.
 
-    Current policy:
-        none/speculative <-> indirect
-        indirect <-> moderate
-
-    These rules can be adjusted later without changing the rest
-    of the Stage 1 pipeline.
-    """
+    #Determine whether observed category variation is considered low-level and does not require Stage 2.
 
     if unique_categories.issubset(
         {
@@ -169,9 +136,7 @@ def is_noncritical_low_variation(unique_categories):
     return False
 
 
-# ============================================================
-# INPUT VALIDATION
-# ============================================================
+
 
 def validate_initial_results(initial_results):
     """
@@ -278,18 +243,11 @@ def run_stage1(initial_results):
     5. Otherwise:
          - needs_additional_evaluation
          - send that SDG to Stage 2
-
-    Returns all Stage 1 results in memory.
-    No files are read or written.
     """
 
     course_code, runs = validate_initial_results(
         initial_results
     )
-
-    # --------------------------------------------------------
-    # Collect scores for SDG1-SDG16
-    # --------------------------------------------------------
 
     sdg_scores = {
         f"SDG{i}": []
@@ -312,10 +270,7 @@ def run_stage1(initial_results):
 
             sdg_scores[sdg].append(score)
 
-    # --------------------------------------------------------
-    # Analyze each course-SDG pair
-    # --------------------------------------------------------
-
+    
     results = []
     unresolved_pairs = []
     near_boundary_pairs = []
@@ -380,9 +335,6 @@ def run_stage1(initial_results):
         boundary_flag = False
         boundary_between = None
 
-        # ----------------------------------------------------
-        # STATUS DECISION
-        # ----------------------------------------------------
 
         if len(unique_categories) == 1:
 
@@ -406,9 +358,6 @@ def run_stage1(initial_results):
         else:
             status = "needs_additional_evaluation"
 
-        # ----------------------------------------------------
-        # RESULT
-        # ----------------------------------------------------
 
         result = {
             "course": course_code,
@@ -458,9 +407,6 @@ def run_stage1(initial_results):
 
         results.append(result)
 
-        # ----------------------------------------------------
-        # STAGE 2 INPUT
-        # ----------------------------------------------------
 
         if status == "needs_additional_evaluation":
 
@@ -495,9 +441,6 @@ def run_stage1(initial_results):
                 }
             )
 
-        # ----------------------------------------------------
-        # NEAR-BOUNDARY INFORMATION
-        # ----------------------------------------------------
 
         if status == "stable_near_boundary":
 
@@ -523,9 +466,6 @@ def run_stage1(initial_results):
                 }
             )
 
-    # ========================================================
-    # SUMMARY
-    # ========================================================
 
     status_counts = Counter(
         result["status"]
@@ -571,9 +511,6 @@ def run_stage1(initial_results):
         * 100
     )
 
-    # ========================================================
-    # FINAL STAGE 1 OBJECT
-    # ========================================================
 
     return {
         "course": course_code,
