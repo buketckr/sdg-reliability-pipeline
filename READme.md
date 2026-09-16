@@ -67,28 +67,6 @@ learningOutcomes is not required.
 
 ---
 
-
-## Evaluation Flow
-
-The pipeline uses the following process:
-
-Course Data
-    ↓
-5 Initial Full SDG Evaluations
-    ↓
-Stage 1 Reliability Analysis
-    ↓
-Does additional evaluation need to be performed?
-    ↓
-Yes → 3 Additional Full Evaluations → Stage 2
-No  ─────────────────────────────────────┐
-                                         ↓
-                              Stage 3 Final Aggregation
-                                         ↓
-                                     Final Result
-
----
-
 ## Output Format
 
  ```run_pipeline() ``` returns a standard Python dictionary.
@@ -136,6 +114,8 @@ category (Final score category)
 status (Reliability status)
 source (Stage that produced the final result)
 reliability (Additional reliability metadata)
+
+,
 
 
 
