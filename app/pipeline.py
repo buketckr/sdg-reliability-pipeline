@@ -9,9 +9,6 @@ from app.stage2 import run_stage2
 from app.stage3 import run_stage3
 
 
-# ============================================================
-# TOKEN USAGE
-# ============================================================
 
 def summarize_token_usage(runs):
     """
@@ -77,10 +74,6 @@ def summarize_token_usage(runs):
     return token_usage
 
 
-# ============================================================
-# RESPONSE TIME
-# ============================================================
-
 def summarize_response_time(runs):
     """
     Sum LLM response time across multiple runs.
@@ -111,9 +104,6 @@ def summarize_response_time(runs):
     )
 
 
-# ============================================================
-# RUN DIAGNOSTICS
-# ============================================================
 
 def build_run_diagnostics(runs):
     """
@@ -196,10 +186,6 @@ def build_run_diagnostics(runs):
     return diagnostics
 
 
-# ============================================================
-# PIPELINE
-# ============================================================
-
 def run_pipeline(course_data):
     """
     Run the complete SDG reliability evaluation pipeline
@@ -249,9 +235,6 @@ def run_pipeline(course_data):
             "course_data must be a dictionary."
         )
 
-    # ========================================================
-    # INITIAL EVALUATIONS
-    # ========================================================
 
     initial_results = evaluate_course(
         course_data=course_data,
@@ -262,9 +245,6 @@ def run_pipeline(course_data):
         "runs"
     ]
 
-    # ========================================================
-    # STAGE 1 TOKEN USAGE
-    # ========================================================
 
     stage1_token_usage = (
         summarize_token_usage(
@@ -272,9 +252,6 @@ def run_pipeline(course_data):
         )
     )
 
-    # ========================================================
-    # STAGE 1 RESPONSE TIME
-    # ========================================================
 
     stage1_response_time = (
         summarize_response_time(
@@ -282,9 +259,6 @@ def run_pipeline(course_data):
         )
     )
 
-    # ========================================================
-    # STAGE 1 DIAGNOSTICS
-    # ========================================================
 
     stage1_diagnostics = (
         build_run_diagnostics(
@@ -292,17 +266,12 @@ def run_pipeline(course_data):
         )
     )
 
-    # ========================================================
-    # STAGE 1
-    # ========================================================
 
     stage1_result = run_stage1(
         initial_results
     )
 
-    # ========================================================
-    # STAGE 2 DEFAULT VALUES
-    # ========================================================
+
 
     stage2_result = None
 
@@ -316,9 +285,7 @@ def run_pipeline(course_data):
 
     stage2_diagnostics = []
 
-    # ========================================================
-    # STAGE 2
-    # ========================================================
+
 
     if stage1_result[
         "needs_stage2"
@@ -352,18 +319,14 @@ def run_pipeline(course_data):
             )
         )
 
-    # ========================================================
-    # STAGE 3
-    # ========================================================
+
 
     final_result = run_stage3(
         stage1_result=stage1_result,
         stage2_result=stage2_result,
     )
 
-    # ========================================================
-    # OVERALL TOKEN USAGE
-    # ========================================================
+
 
     overall_token_usage = {
         "input_tokens":
@@ -397,19 +360,12 @@ def run_pipeline(course_data):
             ),
     }
 
-    # ========================================================
-    # OVERALL RESPONSE TIME
-    # ========================================================
 
     overall_response_time = round(
         stage1_response_time
         + stage2_response_time,
         2,
     )
-
-    # ========================================================
-    # PIPELINE METADATA
-    # ========================================================
 
     final_result[
         "pipeline"
@@ -428,9 +384,7 @@ def run_pipeline(course_data):
             ),
     }
 
-    # ========================================================
-    # TOKEN USAGE
-    # ========================================================
+
 
     final_result[
         "token_usage"
@@ -445,9 +399,6 @@ def run_pipeline(course_data):
             overall_token_usage,
     }
 
-    # ========================================================
-    # TIMING
-    # ========================================================
 
     final_result[
         "timing"
@@ -462,9 +413,7 @@ def run_pipeline(course_data):
             overall_response_time,
     }
 
-    # ========================================================
-    # DIAGNOSTICS
-    # ========================================================
+
 
     final_result[
         "diagnostics"
