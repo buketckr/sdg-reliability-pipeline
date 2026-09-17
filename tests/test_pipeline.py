@@ -4,11 +4,13 @@ from app.pipeline import run_pipeline
 
 
 course_data = {
-    "courseCode": "SPS374",
+    "courseCode": "MGMT301",
     "courseDescEN": (
-        "This course aims to provide an introduction to the global environmental challenges with their scientific, economic and political aspects from an interdisciplinary natural and social science perspective. This course equips students with skills to comprehend and analyses the historical background, as well as the future outlook of current environmental problems caused by the immense impact of human civilizations, particularly by economic growth and changing production-consumption patterns. Topics to be discussed include environmental pollution and ecological footprint, global issues such as ozone depletion, deforestation, climate change, and biodiversity loss, air pollution and other environmental health issues, urban environmental problems, food and water politics, plastic pollution and the oceans. Course include discussions of case studies for the solutions and movements for a sustainable future, such as eco-innovation, green economy, and environmentalist campaigns. ",
+      "This course offers a sociological and historical perspective on sustainability that encompasses environmental, economic, and social dimensions, ranging from inequality and poverty to responsible consumption. It introduces key issues, questions, and approaches in contemporary sustainability debates, including the Anthropocene, climate change, circular economy, green transitions, green financing, degrowth, carbon markets, ESG and environmental justice. The course also explores prominent sectors central to public sustainability discourse, such as plastics, fast fashion industry, forests, water and oceans, mining, and electric vehicles. By the end of this course, students will gain a comprehensive understanding of sustainability's historical, social, and political dimensions and its relevance to current environmental and economic challenges. They will develop the ability to analyze sustainability issues across sectors, interpret key concepts like the Anthropocene and circular economy, and critically evaluate regulatory and political approaches. Equipped with sociological and historical frameworks, students will propose practical solutions to enhance sustainability practices in diverse contexts. ",
     ),
-    "learningOutcomes": []
+    "learningOutcomes":  [
+          
+        ]
 }
 
 
