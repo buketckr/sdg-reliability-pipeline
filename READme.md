@@ -44,6 +44,15 @@ Create a ```python .env ``` file in the project root.
 An .env.example file is provided as a template.
 
 ---
+## Testing
+
+A simple end-to-end test script is included to verify that the complete pipeline can run successfully.
+
+```bash
+python -m tests.test_pipeline
+```
+
+---
 
 ## Input Format
 
@@ -265,15 +274,7 @@ Development or administrative interfaces may also use the returned diagnostic in
 These details do not necessarily need to be shown in the default user interface.
 
 ---
-## Testing
 
-A simple end-to-end test script is included to verify that the complete pipeline can run successfully.
-
-```bash
-python -m tests.test_pipeline
-```
-
----
 
 ## Evaluation Flow and Terminology
 
