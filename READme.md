@@ -189,11 +189,7 @@ The `pipeline` field summarizes how the evaluation was performed:
 
 ### Token Usage
 
-The `token_usage` field reports token consumption for:
-
-- Stage 1
-- Stage 2
-- The complete evaluation
+The `token_usage` field reports token consumption for Stage 1, Stage 2 and the complete evaluation.
 
 Each section contains:
 
@@ -211,8 +207,6 @@ The `timing` field reports the accumulated LLM response time:
 - `stage2_seconds`
 - `overall_seconds`
 
-These values represent LLM API response time rather than complete application execution time.
-
 ### Diagnostics
 
 The `diagnostics` field is provided mainly for development, testing, and troubleshooting.
@@ -226,8 +220,6 @@ It contains:
 - Stage 1 near-boundary pairs
 - Individual Stage 2 runs, when Stage 2 is triggered
 - Detailed Stage 2 results
-
-The diagnostics section is not required to be displayed in the normal end-user interface.
 
 ---
 
@@ -631,4 +623,5 @@ Stage 3 also validates that the final numeric score belongs to the reported cate
 ## Potential Improvements
 
 Using a pre-candidate SDG filter such as Aurora can decrease the time it takes for a full run and the token usage. 
+
 Treshold should be carefully chosen as false negatives are very important.
