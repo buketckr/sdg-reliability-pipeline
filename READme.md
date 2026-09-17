@@ -87,6 +87,7 @@ course_data = {
             "source": "stage1",
             "reliability": {
                 "status": "stable",
+                "reliability_level":"high",
                 "category_agreement": 1.0,
                 "dominant_category": "none/speculative",
                 "category_counts": {
@@ -168,6 +169,7 @@ Each final SDG entry contains:
 - `source` — Stage that produced the final result
 - `reliability` — Additional reliability metadata
 
+
 ### Pipeline Metadata
 
 The `pipeline` field summarizes how the evaluation was performed:
@@ -231,6 +233,7 @@ For each SDG, the UI should preferably display:
 - Final correlation score
 - Final category
 - Reliability status
+- Reliability level
 
 
 ### Suggested Reliability Indicators
@@ -424,6 +427,12 @@ For example:
 
 produces both `SDG-inclusive` and `moderate` classifications, so the SDG is sent to Stage 2.
 
+### Stage 1 reliability-level mapping
+
+- `stable` -> `high`
+- `stable_near_boundary` -> `medium`
+- `low_relevance_variation` -> `medium`
+
 ---
 
 ## Stage 2 Re-evaluation
@@ -562,21 +571,35 @@ A Stage 2 result is considered boundary-sensitive when the confidence interval c
 
 ## Reliability Level
 
-A reliability level is assigned to results processed through Stage 2.
+Each final SDG result includes a reliability level.
 
-### `high`
+The reliability level describes the repeatability and stability of the model output. It should not be interpreted as a probability that the SDG classification is objectively correct.
+
+### Stage 1 Reliability Levels
+
+For results resolved in Stage 1:
+
+- `stable` -> `high`
+- `stable_near_boundary` -> `medium`
+- `low_relevance_variation` -> `medium`
+
+A result marked as `needs_additional_evaluation` does not receive a final Stage 1 reliability level because it proceeds to Stage 2.
+
+### Stage 2 Reliability Levels
+
+For results processed through Stage 2:
+
+#### `high`
 
 The result passes all Stage 2 stability checks and its 95% confidence interval remains entirely within the final category.
 
-### `medium`
+#### `medium`
 
 The result passes the Stage 2 stability checks, but the confidence interval crosses a category boundary.
 
-### `low`
+#### `low`
 
 The result remains `unstable` after Stage 2.
-
-The reliability level describes output repeatability and should not be interpreted as a probability of correctness.
 
 ---
 
