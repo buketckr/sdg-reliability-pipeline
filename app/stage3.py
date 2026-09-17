@@ -39,17 +39,39 @@ def build_stage2_lookup(stage2_result):
     }
 
 
+def get_stage1_reliability_level(status):
+
+    #Convert a resolved Stage 1 status into a reliability level.
+
+    if status == "stable":
+        return "high"
+
+    if status == "stable_near_boundary":
+        return "medium"
+
+    if status == "low_relevance_variation":
+        return "medium"
+
+    return None
 
 
 def build_stage1_reliability(stage1_item):
-  
-    #Build reliability metadata for a result resolved in Stage 1.
+    """
+    Build reliability metadata for a result resolved in Stage 1.
+    """
 
- 
+    status = stage1_item[
+        "status"
+    ]
 
     return {
         "status":
-            stage1_item["status"],
+            status,
+
+        "reliability_level":
+            get_stage1_reliability_level(
+                status
+            ),
 
         "category_agreement":
             float(
@@ -94,7 +116,6 @@ def build_stage1_reliability(stage1_item):
                 ]
             ),
     }
-
 
 
 def build_stage2_reliability(stage2_item):
