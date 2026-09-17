@@ -627,4 +627,7 @@ or:
 Stage 3 also validates that the final numeric score belongs to the reported category.
 
 ---
+## Potential Improvements
 
+Using a pre-candidate SDG filter such as Aurora can decrease the time it takes for a full run and the token usage. 
+Treshold should be carefully chosen as false negatives are very important.
