@@ -37,7 +37,8 @@ It coordinates the complete evaluation workflow:
 - Stage 1 reliability analysis
 - Conditional Stage 2 re-evaluation
 - Stage 3 final aggregation
-
+- Token usage and LLM response-time aggregation
+- Diagnostic output generation
 ---
 
 ### `llm_evaluator.py`
@@ -51,6 +52,7 @@ Responsibilities include:
 - Repeated SDG1-SDG16 evaluations
 - Response validation
 - Retry handling
+- Token usage collection and response-time measurement
 
 ---
 
@@ -148,7 +150,7 @@ course_data = {
 }
 ```
 
-learningOutcomes is not required.
+`learningOutcomes` is optional. If it is not available, the course can be evaluated using the course description alone.
 
 ---
 
@@ -160,6 +162,7 @@ learningOutcomes is not required.
 ```python
 {
     "course": "MGMT411",
+
     "evaluation": [
         {
             "SDGInfo": "SDG1",
@@ -181,13 +184,60 @@ learningOutcomes is not required.
             }
         }
     ],
+
     "summary": {
         "total_sdgs": 16
     },
+
     "pipeline": {
         "initial_runs": 5,
         "stage2_performed": False,
         "stage2_extra_runs": 0
+    },
+
+    "token_usage": {
+        "stage1": {
+            "input_tokens": 4200,
+            "output_tokens": 1080,
+            "total_tokens": 5280
+        },
+        "stage2": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0
+        },
+        "overall": {
+            "input_tokens": 4200,
+            "output_tokens": 1080,
+            "total_tokens": 5280
+        }
+    },
+
+    "timing": {
+        "stage1_seconds": 12.4,
+        "stage2_seconds": 0.0,
+        "overall_seconds": 12.4
+    },
+
+    "diagnostics": {
+        "stage1_runs": [
+            {
+                "run": 1,
+                "scores": {
+                    "SDG1": 18,
+                    "SDG2": 25
+                },
+                "response_time_seconds": 2.4,
+                "input_tokens": 840,
+                "output_tokens": 216,
+                "total_tokens": 1056
+            }
+        ],
+
+        "stage1_unresolved_pairs": [],
+        "stage1_near_boundary_pairs": [],
+        "stage2_runs": [],
+        "stage2_results": []
     }
 }
 
@@ -203,6 +253,56 @@ Each final SDG entry contains:
 - `source` — Stage that produced the final result
 - `reliability` — Additional reliability metadata
 
+### Pipeline Metadata
+
+The `pipeline` field summarizes how the evaluation was performed:
+
+- `initial_runs` — Number of initial LLM evaluations
+- `stage2_performed` — Whether additional Stage 2 evaluation was required
+- `stage2_extra_runs` — Number of additional Stage 2 runs
+
+### Token Usage
+
+The `token_usage` field reports token consumption for:
+
+- Stage 1
+- Stage 2
+- The complete evaluation
+
+Each section contains:
+
+- `input_tokens`
+- `output_tokens`
+- `total_tokens`
+
+If Stage 2 is not performed, its token values are zero.
+
+### Timing
+
+The `timing` field reports the accumulated LLM response time:
+
+- `stage1_seconds`
+- `stage2_seconds`
+- `overall_seconds`
+
+These values represent LLM API response time rather than complete application execution time.
+
+### Diagnostics
+
+The `diagnostics` field is provided mainly for development, testing, and troubleshooting.
+
+It contains:
+
+- Individual Stage 1 run scores
+- Per-run token usage
+- Per-run response time
+- Stage 1 unresolved SDG pairs
+- Stage 1 near-boundary pairs
+- Individual Stage 2 runs, when Stage 2 is triggered
+- Detailed Stage 2 results
+
+The diagnostics section is not required to be displayed in the normal end-user interface.
+
 ---
 
 ## Recommended UI Presentation
@@ -216,7 +316,6 @@ For each SDG, the UI should preferably display:
 - Final correlation score
 - Final category
 - Reliability status
-- Reliability level
 
 
 ### Suggested Reliability Indicators
@@ -239,11 +338,13 @@ For users who need more information, the interface may provide an expandable det
 - Stage 1 scores
 - Stage 2 scores, when applicable
 - Whether the result was resolved in Stage 1 or Stage 2
-- 95% confidence interval
+- 95% confidence interval, when Stage 2 is performed
 - Boundary sensitivity
-- Reliability level
+- Reliability level, when available
 
-These details do not necessarily need to be shown in the default view.
+Development or administrative interfaces may also use the returned diagnostic information to inspect individual LLM runs, token usage, and response times.
+
+These details do not necessarily need to be shown in the default user interface.
 
 ---
 ## Testing
